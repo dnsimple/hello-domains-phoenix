@@ -21,6 +21,26 @@ defmodule HelloDomains.AccountTest do
     assert Repo.get(Account, account.id) == account
   end
 
+  test "get" do
+    account = Account.create!(%Account{}, @valid_attrs)
+    assert Account.get(account.id) == account
+  end
+
+  test "get with no record returns nil" do
+    assert Account.get(0) == nil
+  end
+
+  test "get!" do
+    account = Account.create!(%Account{}, @valid_attrs)
+    assert Account.get!(account.id) == account
+  end
+
+  test "get! with no record raises an error" do
+    assert_raise(Ecto.NoResultsError, fn() ->
+      Account.get!(0)
+    end)
+  end
+
   test "find or create with valid dnsimple account id" do
     {:ok, account} = Account.find_or_create(@valid_attrs[:dnsimple_account_id])
     assert account.dnsimple_account_id == @valid_attrs[:dnsimple_account_id]

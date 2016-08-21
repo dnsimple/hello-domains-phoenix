@@ -25,6 +25,14 @@ defmodule HelloDomains.Account do
     |> Repo.insert!
   end
 
+  def get(id) do
+    Repo.get(Account, id)
+  end
+
+  def get!(id) do
+    Repo.get!(Account, id)
+  end
+
   def changeset(model, params \\ :invalid) do
     model
     |> cast(params, @required_fields, @optional_fields)
