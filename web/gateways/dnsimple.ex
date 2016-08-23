@@ -18,12 +18,7 @@ defmodule HelloDomains.Dnsimple do
   # Domains
 
   def domains(account) do
-    case domain_service.domains(client(account), account.id) do
-      {:ok, response} -> response.data
-      {:error, error} ->
-        IO.inspect(error)
-        raise "Failed to retrieve domains: #{inspect error}"
-    end
+    domain_service.all_domains(client(account), account.id)
   end
 
   # Client for account

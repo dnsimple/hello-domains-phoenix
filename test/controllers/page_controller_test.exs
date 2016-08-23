@@ -12,6 +12,6 @@ defmodule HelloDomains.PageControllerTest do
     account = Account.create!(%Account{dnsimple_account_id: "1"})
     conn = assign(conn, :current_account, account)
     conn = get conn, "/"
-    assert html_response(conn, 200) =~ "Welcome to Phoenix!"
+    assert html_response(conn, 200) =~ "Hello, DNSimple Domains!"
   end
 end

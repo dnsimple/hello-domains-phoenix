@@ -11,8 +11,12 @@ defmodule HelloDomains.Dnsimple.IdentityServiceMock do
 end
 
 defmodule HelloDomains.Dnsimple.DomainsServiceMock do
-  def domains(_client, _opts) do
+  def domains(_client, _account_id, _opts) do
     {:ok, %Dnsimple.Response{data: []}}
+  end
+
+  def all_domains(_client, _account_id) do
+    []
   end
 
   def domain(_client, _account_id, name) do
