@@ -21,6 +21,6 @@ config :hello_domains, HelloDomains.Repo,
 config :hello_domains,
   dnsimple_client_id: "dnsimple-client-id",
   dnsimple_client_secret: "dnsimple-client-secret",
-  dnsimple_oauth_service: HelloDomains.Dnsimple.OauthServiceMock,
-  dnsimple_identity_service: HelloDomains.Dnsimple.IdentityServiceMock,
-  dnsimple_domains_service: HelloDomains.Dnsimple.DomainsServiceMock
+  dnsimple_oauth_service: HelloDomains.Dnsimple.OauthMock,
+  dnsimple_identity_service: HelloDomains.Dnsimple.IdentityMock,
+  dnsimple_domains_service: HelloDomains.Dnsimple.DomainsMock

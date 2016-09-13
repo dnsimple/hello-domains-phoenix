@@ -1,16 +1,16 @@
-defmodule HelloDomains.Dnsimple.OauthServiceMock do
+defmodule HelloDomains.Dnsimple.OauthMock do
   def exchange_authorization_for_token(_client, _attributes) do
     {:ok, %Dnsimple.Response{data: %{access_token: "access-token"}}}
   end
 end
 
-defmodule HelloDomains.Dnsimple.IdentityServiceMock do
+defmodule HelloDomains.Dnsimple.IdentityMock do
   def whoami(_client) do
     {:ok, %Dnsimple.Response{data: %{account: %{"id" => 1}}}}
   end
 end
 
-defmodule HelloDomains.Dnsimple.DomainsServiceMock do
+defmodule HelloDomains.Dnsimple.DomainsMock do
   def domains(_client, _account_id, _opts) do
     {:ok, %Dnsimple.Response{data: []}}
   end
