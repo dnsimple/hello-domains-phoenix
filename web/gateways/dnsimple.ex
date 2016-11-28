@@ -18,7 +18,7 @@ defmodule HelloDomains.Dnsimple do
   # Domains
 
   def domains(account) do
-    domain_service.all_domains(client(account), account.id)
+    domain_service.all_domains(client(account), account.dnsimple_account_id)
   end
 
   # Client for account
