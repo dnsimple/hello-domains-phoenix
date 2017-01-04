@@ -13,7 +13,8 @@ use Mix.Config
 
 config :hello_domains,
   dnsimple_client_id: "client_id",
-  dnsimple_client_secret: "client_secret"
+  dnsimple_client_secret: "client_secret",
+  dnsimple_client_base_url: "https://api.sandbox.dnsimple.com
 ```
 
 ## Start the Hello Domains app
