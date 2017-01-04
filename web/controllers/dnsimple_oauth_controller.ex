@@ -4,11 +4,10 @@ defmodule HelloDomains.DnsimpleOauthController do
   alias HelloDomains.Account
 
   def new(conn, _params) do
-    client    = %Dnsimple.Client{}
     state = :crypto.strong_rand_bytes(8) |> Base.url_encode64 |> binary_part(0, 8)
     assign(conn, :dnsimple_oauth_state, state)
     conn = put_session(conn, :dnsimple_oauth_state, state)
-    oauth_url = HelloDomains.Dnsimple.authorize_url(client, state: state)
+    oauth_url = HelloDomains.Dnsimple.authorize_url(state: state)
     redirect(conn, external: oauth_url)
   end
 
@@ -23,14 +22,13 @@ defmodule HelloDomains.DnsimpleOauthController do
       code: params["code"],
       state: params["state"]
     }
-    case HelloDomains.Dnsimple.exchange_authorization_for_token(client, attributes) do
+    case HelloDomains.Dnsimple.exchange_authorization_for_token(attributes) do
       {:ok, response} ->
         access_token = response.data.access_token
-        client = %Dnsimple.Client{access_token: access_token}
-        case HelloDomains.Dnsimple.whoami(client) do
+        case HelloDomains.Dnsimple.whoami(access_token) do
           {:ok, %Dnsimple.Response{data: data}} ->
-            account = Account.find_or_create!(Integer.to_string(data.account["id"]), %{
-              "dnsimple_account_email" => data.account["email"],
+            account = Account.find_or_create!(Integer.to_string(data.account.id), %{
+              "dnsimple_account_email" => data.account.email,
               "dnsimple_access_token" => access_token
             })
 

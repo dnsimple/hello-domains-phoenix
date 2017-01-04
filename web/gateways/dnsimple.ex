@@ -6,19 +6,19 @@ defmodule HelloDomains.Dnsimple do
 
   # OAuth
 
-  def authorize_url(client, options) do
+  def authorize_url(options) do
     Dnsimple.Oauth.authorize_url(client, @client_id, state: options[:state])
   end
 
-  def exchange_authorization_for_token(client, attributes) do
+  def exchange_authorization_for_token(attributes) do
     attributes = Map.merge(attributes, %{client_id: @client_id, client_secret: @client_secret})
     oauth_service.exchange_authorization_for_token(client, attributes)
   end
 
   # Identity
 
-  def whoami(client) do
-    identity_service.whoami(client)
+  def whoami(access_token) do
+    identity_service.whoami(client(access_token))
   end
 
   # Domains
@@ -27,10 +27,16 @@ defmodule HelloDomains.Dnsimple do
     domain_service.all_domains(client(account), account.dnsimple_account_id)
   end
 
-  # Client for account
+  # Client
 
-  def client(account) do
-    %Dnsimple.Client{access_token: account.dnsimple_access_token}
+  def client do
+    %Dnsimple.Client{base_url: @base_url}
+  end
+  def client(%HelloDomains.Account{dnsimple_access_token: access_token}) do
+    client(access_token)
+  end
+  def client(access_token) do
+    %Dnsimple.Client{base_url: @base_url, access_token: access_token}
   end
 
   # Service modules
