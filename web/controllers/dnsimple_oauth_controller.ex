@@ -17,11 +17,7 @@ defmodule HelloDomains.DnsimpleOauthController do
       raise "State does not match"
     end
 
-    client = %Dnsimple.Client{}
-    attributes = %{
-      code: params["code"],
-      state: params["state"]
-    }
+    attributes = %{code: params["code"], state: params["state"]}
     case HelloDomains.Dnsimple.exchange_authorization_for_token(attributes) do
       {:ok, response} ->
         access_token = response.data.access_token
@@ -46,4 +42,3 @@ defmodule HelloDomains.DnsimpleOauthController do
   end
 
 end
-

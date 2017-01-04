@@ -5,6 +5,13 @@ defmodule HelloDomains.PageController do
 
   def index(conn, _params) do
     account = conn.assigns[:current_account]
-    render conn, "index.html", dnsimple_domains: HelloDomains.Dnsimple.domains(account)
+
+    case HelloDomains.Dnsimple.domains(account) do
+      {:ok, domains} ->
+        render conn, "index.html", dnsimple_domains: domains
+      {:error, error} ->
+        IO.inspect(error)
+        raise "Failed to retreive account domains: #{inspect error}"
+    end
   end
 end
