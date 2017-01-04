@@ -5,7 +5,7 @@ defmodule HelloDomains.Dnsimple.OauthMock do
 end
 
 defmodule HelloDomains.Dnsimple.IdentityMock do
-  def whoami(_access_token) do
+  def whoami(_client) do
     {:ok, %Dnsimple.Response{data: %{account: %{id: 1, email: "email@example.com"}}}}
   end
 end
