@@ -6,11 +6,12 @@ defmodule HelloDomains.Dnsimple do
 
   # OAuth
 
-  def authorize_url(client, client_id, options) do
-    Dnsimple.Oauth.authorize_url(client, client_id, state: options[:state])
+  def authorize_url(client, options) do
+    Dnsimple.Oauth.authorize_url(client, @client_id, state: options[:state])
   end
 
   def exchange_authorization_for_token(client, attributes) do
+    attributes = Map.merge(attributes, %{client_id: @client_id, client_secret: @client_secret})
     oauth_service.exchange_authorization_for_token(client, attributes)
   end
 

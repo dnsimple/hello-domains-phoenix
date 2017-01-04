@@ -5,11 +5,10 @@ defmodule HelloDomains.DnsimpleOauthController do
 
   def new(conn, _params) do
     client    = %Dnsimple.Client{}
-    client_id = Application.fetch_env!(:hello_domains, :dnsimple_client_id)
     state = :crypto.strong_rand_bytes(8) |> Base.url_encode64 |> binary_part(0, 8)
     assign(conn, :dnsimple_oauth_state, state)
     conn = put_session(conn, :dnsimple_oauth_state, state)
-    oauth_url = HelloDomains.Dnsimple.authorize_url(client, client_id, state: state)
+    oauth_url = HelloDomains.Dnsimple.authorize_url(client, state: state)
     redirect(conn, external: oauth_url)
   end
 
@@ -21,8 +20,6 @@ defmodule HelloDomains.DnsimpleOauthController do
 
     client = %Dnsimple.Client{}
     attributes = %{
-      client_id: Application.fetch_env!(:hello_domains, :dnsimple_client_id),
-      client_secret: Application.fetch_env!(:hello_domains, :dnsimple_client_secret),
       code: params["code"],
       state: params["state"]
     }
