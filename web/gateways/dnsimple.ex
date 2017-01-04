@@ -1,4 +1,9 @@
 defmodule HelloDomains.Dnsimple do
+
+  @base_url Application.fetch_env!(:hello_domains, :dnsimple_client_base_url)
+  @client_id Application.fetch_env!(:hello_domains, :dnsimple_client_id)
+  @client_secret Application.fetch_env!(:hello_domains, :dnsimple_client_secret)
+
   # OAuth
 
   def authorize_url(client, client_id, options) do
