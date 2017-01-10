@@ -6,20 +6,12 @@ end
 
 defmodule HelloDomains.Dnsimple.IdentityMock do
   def whoami(_client) do
-    {:ok, %Dnsimple.Response{data: %{account: %{"id" => 1}}}}
+    {:ok, %Dnsimple.Response{data: %{account: %{id: 1, email: "email@example.com"}}}}
   end
 end
 
 defmodule HelloDomains.Dnsimple.DomainsMock do
-  def domains(_client, _account_id, _opts) do
-    {:ok, %Dnsimple.Response{data: []}}
-  end
-
   def all_domains(_client, _account_id) do
-    []
-  end
-
-  def domain(_client, _account_id, name) do
-    {:ok, %Dnsimple.Response{data: %Dnsimple.Domain{name: name}}}
+    {:ok, []}
   end
 end
